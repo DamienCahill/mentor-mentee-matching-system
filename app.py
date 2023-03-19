@@ -4,9 +4,9 @@ app = Flask(__name__)
 
 @app.route("/")  # Same as @app.get('/') in flask 2
 def index():
-    return "Hello World"
+    return "Hello Word"
 
 
 
 if __name__ == "__main__":
-    app.run(debug=True)  # pragma; no coverage
+    app.run(host='0.0.0.0', debug=True)  # pragma; no coverage
