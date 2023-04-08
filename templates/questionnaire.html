@@ -1,101 +1,52 @@
-<div class="wrap">
-  <h1 class="likert-header">This is a Likert Scale survey</h1>
-  <form action="">
-    <label class="statement">This HTML Likert scale is easy to use.</label>
-    <ul class='likert'>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Strongly agree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Agree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Neutral</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="disagree">
-        <label>Disagree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Strongly disagree</label>
-      </li>
-    </ul>
-    <label class="statement">It's clear that this is a responsive design.</label>
-    <ul class='likert'>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Strongly agree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Agree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Neutral</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="disagree">
-        <label>Disagree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Strongly disagree</label>
-      </li>
-    </ul>
-    <label class="statement">Codepen.io is an excellent tool for prototyping.</label>
-    <ul class='likert'>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Strongly agree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Agree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Neutral</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="disagree">
-        <label>Disagree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Strongly disagree</label>
-      </li>
-    </ul>
-    <label class="statement">Pete Fecteau is incredibly smart and handsome.</label>
-    <ul class='likert'>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Strongly agree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Agree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Neutral</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="disagree">
-        <label>Disagree</label>
-      </li>
-      <li>
-        <input type="radio" name="likert" value="strong_agree">
-        <label>Strongly disagree</label>
-      </li>
-    </ul>
-    <div class="buttons">
-      <button class="clear">Clear</button>
-      <button class="submit">Submit</button>
+{% extends "base.html" %}
+{% block body %}
+
+  <div class="container-fluid bg-light">
+    <div class="row justify-content-center align-items-center" style="height: 100vh;">
+      <div class="col-sm-8 col-md-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2 class="text-center">Mentee Questionnaire</h2>
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            <form action="/submit-questionnaire" method="post">
+              {% for question in open_text_questions %}
+                <div class="mb-3">
+                  <label for="email" class="form-label">{{question.1}}</label>
+                  <input type="{{question.3}}" class="form-control" id="{{question.0}}" name="open_text_answer_{{question.0}}" required>
+                </div>
+                <hr>
+              {% endfor %}
+              {% for question in likert_scale_questions %}
+                <label>{{question.1}}</label><br>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="likert_scale_answer_{{question.0}}" id="radio{{question.0}}" value="1" required>
+                  <label class="form-check-label" for="radio{{question.0}}">Strongly Disagree</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="likert_scale_answer_{{question.0}}" id="radio{{question.0}}" value="2">
+                  <label class="form-check-labesl" for="radio{{question.0}}">Disgree</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="likert_scale_answer_{{question.0}}" id="radio{{question.0}}" value="3">
+                  <label class="form-check-label" for="radio{{question.0}}">Neutral</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="likert_scale_answer_{{question.0}}" id="radio{{question.0}}" value="4">
+                  <label class="form-check-label" for="radio{{question.0}}">Agree</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="likert_scale_answer_{{question.0}}" id="radio{{question.0}}" value="5">
+                  <label class="form-check-label" for="radio{{question.0}}">Strongly Agree</label>
+                </div>
+                <br><hr>
+              {% endfor %}
+              <button type="submit" class="btn btn-primary">Submit Questionnaire</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-  </form>
-</div>
+  </div>
+  {% endblock %}
