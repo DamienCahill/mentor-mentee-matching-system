@@ -1,7 +1,14 @@
 from __main__ import app
 from flask import Flask, request, render_template, session
 from auth.auth import login_required
-from models.questionnaire_model import get_open_text_questions, get_likert_scale_questions, create_questionnaire_submission, insert_answer
+from models.questionnaire_model import (
+	get_open_text_questions, 
+	get_likert_scale_questions, 
+	create_questionnaire_submission, 
+	insert_answer,
+	get_submissions,
+	get_submission
+)
 import time
 
 @app.route("/questionnaire", methods=["GET"]) 
@@ -25,8 +32,12 @@ def submit_questionnaire():
 		insert_answer(submission_id, question_id, answer, answer_type)
 	return render_template("test.html")
 
+@app.route("/submitted-questionnaires", methods=["GET"]) 
 def view_submitted_questionnaires():
-	pass
+	submissions =  get_submissions()
+	return render_template("test.html", data=submissions)
 
-def view_submitted_questionnaire():
-	pass
+@app.route('/submitted-questionnaires/<submission_id>')
+def view_submitted_questionnaire(submission_id):
+	submissions =  get_submission(submission_id)
+	return render_template("test.html", data=submissions)
