@@ -5,6 +5,7 @@ app = Flask(__name__)
 import controllers.questionnaire_controller
 import controllers.auth_controller
 import controllers.mentor_controller
+import controllers.mentoring_categories_controller
 @app.route("/")  # Same as @app.get('/') in flask 2
 @login_required
 def index():
