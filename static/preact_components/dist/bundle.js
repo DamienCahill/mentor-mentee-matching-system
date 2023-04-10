@@ -13,10 +13,29 @@
     const [selectedCategories, setSelectedCategories] = h([]);
     const [availableCategories, setAvailableCategories] = h([]);
     p(() => {
-      console.log('here');
       fetchCategories();
     }, []);
 
+    const handleAddCategoryClick = (e) => {
+      let text = e.target.attributes[1].nodeValue;
+      let newSelectedCategories = [].concat(selectedCategories);
+      newSelectedCategories.push([e.target.id, text]);
+      setAvailableCategories(availableCategories.filter((category) => category[0] != e.target.id));
+      setSelectedCategories(newSelectedCategories);
+      document.getElementById('selectedCategoryIds').value = newSelectedCategories.map(category => category[0]).join(',');
+      console.log(document.getElementById('selectedCategoryIds').value);
+    };
+
+    const handleRemoveCategoryClick = (e) => {
+      let newAvailableCategories = [].concat(availableCategories);
+      let text = e.target.attributes[1].nodeValue;
+      newAvailableCategories.push([e.target.id, text]);
+      setSelectedCategories(selectedCategories.filter((category) => category[0] != e.target.id));
+      let newVals = selectedCategories.filter((category) => category[0] != e.target.id);
+      document.getElementById('selectedCategoryIds').value = newVals.map(category => category[0]).join(',');
+      setAvailableCategories(newAvailableCategories);
+      console.log(document.getElementById('selectedCategoryIds').value);
+    };
     async function fetchCategories() {
       let allCategories = [];
       let selectedCategories = [];
@@ -47,6 +66,7 @@
         const json = await mentorCategoriesRes.json();
         setSelectedCategories(json);
         selectedCategories = json;
+        document.getElementById('selectedCategoryIds').value = json.map(category => category[0]).join(',');
         console.log(json);
       }
 
@@ -56,24 +76,29 @@
 
     }
   return m$1`
+  <input type=hidden id="selectedCategoryIds" name="selectedCategoryIds" value=""></input>
   <div class="card" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">Selected Categories</h5>
-      <ul>
         ${selectedCategories.map((categories, index) => (
-          m$1`<li>${categories[1]}</li>`
+          m$1`
+            <a style="margin:3px;" class="btn btn-success" href="#">
+              ${categories[1]} <i id=${categories[0]} name="${categories[1]}" class="fas fa-minus" onClick=${handleRemoveCategoryClick}></i>
+            </a>
+          `
         ))}
-      </ul>
     </div>
   </div>
   <div class="card" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">Available Categories</h5>
-      <ul>
         ${availableCategories.map((categories, index) => (
-          m$1`<li>${categories[1]}</li>`
+          m$1`
+            <a style="margin:3px;" class="btn btn-primary" href="#">
+              ${categories[1]} <i id=${categories[0]} name="${categories[1]}" class="fas fa-plus" onClick=${handleAddCategoryClick}></i>
+            </a><br/>
+          `
         ))}
-      </ul>
     </div>
   </div>
 `;
@@ -84,7 +109,8 @@
   console.log(profileCategorySelector);
   if (profileCategorySelector) {
    B$1(m$1`
-   <${ProfileCategorySelector} apiUrl=${profileCategorySelector.dataset.apiUrl} mentorId=${profileCategorySelector.dataset.mentorId} />
+   <${ProfileCategorySelector} apiUrl=${profileCategorySelector.dataset.apiUrl} mentorId=${profileCategorySelector.dataset.mentorId}
+   selectedCategoryIds=${profileCategorySelector.dataset.selectedCategoryIds} />
  `, profileCategorySelector);
   }
 

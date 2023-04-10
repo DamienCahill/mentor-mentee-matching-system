@@ -9,7 +9,8 @@
             {% if error %}
             <div class="alert alert-danger">{{ error }}</div>
             {% endif %}
-            <form action="/create-mentor" method="post">
+            <form action="/update-mentor/{{mentor.0}}" method="post">
+                <input type="hidden" id="mentor_id" name="mentor_id" value={{mentor.0}}></input>
                 <div class="form-group">
                     <label for="email">Email address:</label>
                     <input type="email" class="form-control" id="email" value={{mentor.1}} placeholder="Enter email" name="email">
@@ -23,8 +24,14 @@
                     <input type="text" class="form-control" id="last_name" value={{mentor.3}} placeholder="Enter Last Name" name="last_name">
                 </div><br>
                 <h2>Edit Mentor Mentoring Categories</h2>
-                <div id="profile-category-selector" data-api-url="http://localhost:8080/mentoring-categories" data-mentor-id="{{mentor.0}}"></div>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <div 
+                  id="profile-category-selector" 
+                  data-api-url="http://localhost:8080/mentoring-categories" 
+                  data-mentor-id="{{mentor.0}}"
+                  data-selected-category-ids="{{mentor_categories}}"
+                  >   
+                </div><br>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
             </form>
           </div>
         </div>

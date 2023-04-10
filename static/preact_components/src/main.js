@@ -7,6 +7,7 @@ const profileCategorySelector = document.getElementById('profile-category-select
 console.log(profileCategorySelector);
 if (profileCategorySelector) {
  render(html`
-   <${ProfileCategorySelector} apiUrl=${profileCategorySelector.dataset.apiUrl} mentorId=${profileCategorySelector.dataset.mentorId} />
+   <${ProfileCategorySelector} apiUrl=${profileCategorySelector.dataset.apiUrl} mentorId=${profileCategorySelector.dataset.mentorId}
+   selectedCategoryIds=${profileCategorySelector.dataset.selectedCategoryIds} />
  `, profileCategorySelector);
 }

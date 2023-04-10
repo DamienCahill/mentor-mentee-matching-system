@@ -26,3 +26,13 @@ def get_mentor_mentoring_categories(mentor_id):
         cursor.execute(sql)
         res = cursor.fetchall()
     return res
+
+def delete_mentor_mentoring_category(mentor_id, mentor_mentoring_category):
+    with UseDatabase(config) as cursor:
+        sql = "DELETE FROM mentor_profiles where mentor_id = %s and mentoring_category_id= %s"
+        cursor.execute(sql, (mentor_id, mentor_mentoring_category))
+
+def add_mentor_mentoring_category(mentor_id, mentor_mentoring_category):
+    with UseDatabase(config) as cursor:
+        sql = "INSERT INTO mentor_profiles (mentor_id, mentoring_category_id) VALUES (%s, %s)"
+        cursor.execute(sql, (mentor_id, mentor_mentoring_category))
