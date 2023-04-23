@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+  {% block body %}
+  <h2> mentor dashboard</h2>
+  <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <a href="" class="text-dark">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="fas fa-handshake fa-5x mb-4"></i>
+                <h5 class="card-title">View Proposed Matches</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <a href="" class="text-dark">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="fas fa-check-circle fa-5x mb-4"></i>
+                <h5 class="card-title">View Accepted Matches</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 mb-4">
+          <a href="edit-my-profile.html" class="text-dark">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="fas fa-pencil-alt fa-5x mb-4"></i>
+                <h5 class="card-title">Edit My Profile</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
