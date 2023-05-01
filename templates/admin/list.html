@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+  {% block body %}
+  {% if message %}
+    <div class="alert alert-success">{{ message }}</div>
+  {% endif %}
+    <div id="admins-table-element" data-api-url="{{url_for('load_dashboard', _external=True)}}/get-all-admins"></div>
+
+    <script src="{{url_for('load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
+  {% endblock %}

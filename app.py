@@ -7,6 +7,7 @@ import controllers.auth_controller
 import controllers.mentor_controller
 import controllers.mentoring_categories_controller
 import controllers.dashboard_controller
+import controllers.admin_controller
 
 @app.route("/force-login")
 def force_login():

@@ -6,7 +6,7 @@ config = {
     'password':'devpass'
 }
     
-def create_mentor(email, first_name, last_name, password):
+def insert_mentor(email, first_name, last_name, password):
     with UseDatabase(config) as cursor:
         sql = "INSERT INTO users (email, first_name, last_name, password, role) VALUES (%s, %s, %s, %s, 1)"
         cursor.execute(sql, (email, first_name, last_name, password))
@@ -21,11 +21,13 @@ def delete_mentor(mentor_id):
         sql = "DELETE FROM users WHERE id=%s AND role=1"
         cursor.execute(sql, (mentor_id,))
 
-def get_all_mentors():
+def view_all_mentors():
     with UseDatabase(config) as cursor:
-        sql = "SELECT id, email, first_name, last_name FROM users WHERE role=1"
+        sql = "SELECT id, email, first_name, last_name FROM users WHERE role_id=2"
+        cursor.reset()
         cursor.execute(sql)
-    return cursor.fetchall()
+        res = cursor.fetchall()
+    return res
 
 def get_mentor(mentor_id):
     with UseDatabase(config) as cursor:

@@ -9,7 +9,7 @@
             {% if error %}
             <div class="alert alert-danger">{{ error }}</div>
             {% endif %}
-            <form action="/update-mentor/{{mentor.0}}" method="post">
+            <form action="/mentors/update/{{mentor.0}}" method="post">
                 <input type="hidden" id="mentor_id" name="mentor_id" value={{mentor.0}}></input>
                 <div class="form-group">
                     <label for="email">Email address:</label>
@@ -26,7 +26,7 @@
                 <h2>Edit Mentor Mentoring Categories</h2>
                 <div 
                   id="profile-category-selector" 
-                  data-api-url="http://localhost:8080/mentoring-categories" 
+                  data-api-url="{{url_for('load_dashboard', _external=True)}}/mentoring-categories" 
                   data-mentor-id="{{mentor.0}}"
                   data-selected-category-ids="{{mentor_categories}}"
                   >   
@@ -38,5 +38,5 @@
       </div>
     </div>
   </div>
-  <script src="../static/preact_components/dist/bundle.js"></script>
+  <script src="{{url_for('load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
   {% endblock %}

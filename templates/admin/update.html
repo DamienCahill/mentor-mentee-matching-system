@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+  {% block body %}
+  <div class="container-fluid bg-light mt-5 mb-5">
+    <div class="row justify-content-center align-items-center" style="height: 100vh;">
+      <div class="col-sm-8 col-md-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2>Edit Admin Details</h2>
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            <form action="/admins/update/{{admin.0}}" method="post">
+                <input type="hidden" id="mentor_id" name="mentor_id" value={{admin.0}}></input>
+                <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control" id="email" value={{admin.1}} placeholder="Enter email" name="email">
+                </div><br>
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" class="form-control" id="first_name" value={{admin.2}} placeholder="Enter First Name" name="first_name">
+                </div><br>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" class="form-control" id="last_name" value={{admin.3}} placeholder="Enter Last Name" name="last_name">
+                </div><br>
+                <button type="submit" class="btn btn-primary">Update Admin Details</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
