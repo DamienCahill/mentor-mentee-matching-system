@@ -1,8 +1,6 @@
 {% extends "base.html" %}
   {% block body %}
-  {{session}}
-  <h2> mentor dashboard</h2>
-  <div class="container">
+  <div class="container mt-5 mb-5">
       <div class="row">
         <div class="col-md-4 mb-4">
           <a href="" class="text-dark">
@@ -25,7 +23,7 @@
           </a>
         </div>
         <div class="col-md-4 mb-4">
-          <a href="/update-mentor/{{ session['userid'] }}" class="text-dark">
+          <a href="/profile" class="text-dark">
             <div class="card h-100">
               <div class="card-body text-center">
                 <i class="fas fa-pencil-alt fa-5x mb-4"></i>

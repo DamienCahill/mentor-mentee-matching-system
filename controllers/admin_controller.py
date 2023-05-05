@@ -44,7 +44,7 @@ def edit_admin(admin_id):
 @login_required
 @admin_role_required
 def view_admins():
-    return render_template("admin/list.html", message=message)
+    return render_template("admin/list.html")
 
 @app.route("/admins/get-all-admins")
 @login_required
