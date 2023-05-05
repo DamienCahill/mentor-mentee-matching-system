@@ -27,7 +27,7 @@ def create_mentor():
 @app.route("/mentors/update/<mentor_id>", methods=["GET", "POST"])
 @login_required
 def edit_mentor(mentor_id):
-    if session.get('user_role_id',0) != 1 and session.get('userid',0) != mentor_id:
+    if session.get('user_role_id',0) != 1 and session.get('userid') != int(mentor_id):
         return redirect(url_for('load_dashboard'))
     if request.method == "GET":
         mentor = mentor_model.get_mentor(mentor_id)
