@@ -26,6 +26,9 @@ const MentorsTable = (props) => {
           { title: '', data: 0, render: (data, type, row) => {
             return `<a href="/mentors/update/${data}">Edit</a>`;
           }},
+          { title: '', data: 0, render: (data, type, row) => {
+            return `<a href="/mentors/delete/${data}">Delete Mentor</a>`;
+          }},
         ],
       });
     });

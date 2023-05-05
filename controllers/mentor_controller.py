@@ -2,7 +2,9 @@ from __main__ import app
 from flask import Flask, request, render_template, session, redirect
 from models.mentor_model import (
     get_mentor,
-    view_all_mentors
+    view_all_mentors,
+    update_mentor,
+    delete_mentor
 )
 from models.mentoring_categories_model import (
     get_mentor_mentoring_categories,
@@ -11,12 +13,12 @@ from models.mentoring_categories_model import (
 )
 import sys
 
-@app.route("/create-mentor", methods=["GET", "POST"])
-def create_mentor():
+@app.route("/mentors/create-mentor", methods=["GET", "POST"])
+def create():
     return render_template('mentor/create.html')
 
 @app.route("/mentors/edit/<mentor_id>", methods=["GET", "POST"])
-def update_mentor(mentor_id):
+def edit(mentor_id):
     if request.method == "GET":
         mentor = get_mentor(mentor_id)
         mentor_categories = get_mentor_mentoring_categories(mentor_id)
@@ -47,16 +49,23 @@ def update_mentor(mentor_id):
         to_be_added = [category for category in new_category_ids if category not in old_mentor_category_ids]
         for category in to_be_added:
             add_mentor_mentoring_category(mentor_id, category)
+
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        update_mentor(mentor_id, first_name, last_name, email)
         return render_template("test.html", data=request.form)
 
-def delete_mentor():
-    pass
-
-@app.route("/mentors")
-def view_mentors():
+@app.route("/mentors/delete/<mentor_id>")
+def delete(mentor_id):
+    delete_mentor(mentor_id)
     return render_template("mentor/list.html")
 
-@app.route("/get-all-mentors")
+@app.route("/mentors")
+def view():
+    return render_template("mentor/list.html")
+
+@app.route("/mentors/get-all-mentors")
 def get_all_mentors():
     data = view_all_mentors()
     return data

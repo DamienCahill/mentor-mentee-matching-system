@@ -6,9 +6,6 @@
         <div class="card shadow">
           <div class="card-body">
             <h2 class="text-center">Create A Mentor</h2>
-            {% if error %}
-            <div class="alert alert-danger">{{ error }}</div>
-            {% endif %}
             <form action="/create-mentor" method="post">
                 <div class="form-group">
                     <label for="email">Email address:</label>

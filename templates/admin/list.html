@@ -1,9 +1,17 @@
 {% extends "base.html" %}
   {% block body %}
-  {% if message %}
-    <div class="alert alert-success">{{ message }}</div>
-  {% endif %}
-    <div id="admins-table-element" data-api-url="{{url_for('load_dashboard', _external=True)}}/get-all-admins"></div>
-
-    <script src="{{url_for('load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
+  <div class="container-fluid bg-light">
+    <div class="row justify-content-center align-items-center" style="height: 100vh;">
+      <div class="col-md-8">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2> Admins </h2>
+            <a style="margin-bottom:5px" href="{{url_for('load_dashboard', _external=True)}}admins/create" class="btn btn-primary">Create New Admin</a>
+            <div id="admins-table-element" data-api-url="{{url_for('load_dashboard', _external=True)}}/get-all-admins"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{{url_for('load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
   {% endblock %}

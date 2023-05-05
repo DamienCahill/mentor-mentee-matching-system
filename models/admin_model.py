@@ -17,9 +17,9 @@ def update_admin(admin_id, email, first_name, last_name):
         sql = "UPDATE users SET email=%s, first_name=%s, last_name=%s WHERE id=%s AND role_id=1"
         cursor.execute(sql, (email, first_name, last_name, admin_id))
 
-def delete_admin(self, admin_id):
+def delete_admin(admin_id):
     with UseDatabase(config) as cursor:
-        sql = "DELETE FROM users WHERE id=%s AND role=1"
+        sql = "DELETE FROM users WHERE id=%s AND role_id=1"
         cursor.execute(sql, (admin_id,))
 
 def view_all_admins():

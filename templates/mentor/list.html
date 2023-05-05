@@ -1,6 +1,15 @@
 {% extends "base.html" %}
-  {% block body %}
-    <div id="mentors-table-element" data-api-url="http://localhost:8080/get-all-mentors"></div>
-
+    {% block body %}
+        <div class="container-fluid bg-light">
+            <div class="row justify-content-center align-items-center" style="height: 100vh;">
+                <div class="col-sm-8 col-md-6">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div id="mentors-table-element" data-api-url="http://localhost:8080/get-all-mentors"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <script src="../static/preact_components/dist/bundle.js"></script>
-  {% endblock %}
+    {% endblock %}

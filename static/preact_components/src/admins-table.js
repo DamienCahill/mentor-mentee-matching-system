@@ -26,6 +26,9 @@ const AdminsTable = (props) => {
           { title: '', data: 0, render: (data, type, row) => {
             return `<a href="/admins/update/${data}">Edit</a>`;
           }},
+          { title: '', data: 0, render: (data, type, row) => {
+            return `<a href="/admins/delete/${data}">Delete Admin</a>`;
+          }},
         ],
       });
     });
