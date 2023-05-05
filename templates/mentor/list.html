@@ -2,14 +2,16 @@
     {% block body %}
         <div class="container-fluid bg-light">
             <div class="row justify-content-center align-items-center" style="height: 100vh;">
-                <div class="col-sm-8 col-md-6">
+                <div class="col-md-8">
                     <div class="card shadow">
                         <div class="card-body">
-                            <div id="mentors-table-element" data-api-url="http://localhost:8080/get-all-mentors"></div>
+                            <h2>Mentors</h2>
+                            <a style="margin-bottom:5px" href="{{url_for('load_dashboard', _external=True)}}mentors/create" class="btn btn-primary">Create New Mentor</a>
+                            <div id="mentors-table-element" data-api-url="{{url_for('load_dashboard', _external=True)}}mentors/get-all-mentors"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    <script src="../static/preact_components/dist/bundle.js"></script>
+        <script src="../static/preact_components/dist/bundle.js"></script>
     {% endblock %}

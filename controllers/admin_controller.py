@@ -43,10 +43,10 @@ def edit_admin(admin_id):
 @app.route("/admins")
 @login_required
 @admin_role_required
-def view_admins(message=''):
+def view_admins():
     return render_template("admin/list.html", message=message)
 
-@app.route("/get-all-admins")
+@app.route("/admins/get-all-admins")
 @login_required
 @admin_role_required
 def get_all_admins():
