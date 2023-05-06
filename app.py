@@ -8,13 +8,7 @@ import controllers.mentor_controller
 import controllers.mentoring_categories_controller
 import controllers.dashboard_controller
 import controllers.admin_controller
-
-@app.route("/force-login")
-def force_login():
-    session["userid"] = 1
-    return redirect("/")
-
-
+import controllers.matches_controller
 # This is required to use sessions.
 app.secret_key = "lkjlhjjkhkhilhuih78hyioy89yt9o8t87tr"
 

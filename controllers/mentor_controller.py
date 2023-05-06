@@ -96,3 +96,11 @@ def view_mentors():
 def get_all_mentors():
     data = mentor_model.view_all_mentors()
     return data
+
+@app.route("/mentors/matches")
+@login_required
+@admin_role_required
+def view_mentor_matches():
+    return render_template('mentor/mentor-matches-list.html')
+
+

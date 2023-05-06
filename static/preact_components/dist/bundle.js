@@ -233,10 +233,89 @@
   `;
   };
 
+  const ProposedMatchesTable = (props) => {
+    p(() => {
+      createTable();
+    }, []);
+    async function createTable() {
+      const res = await fetch(
+        props.apiUrl,
+        {
+          method: 'GET',
+        }
+      );
+      const json = await res.json();
+      json.data;
+      console.log(json);
+      $(document).ready(function () {
+        $('#proposed-matches-table').DataTable({
+          data: json,
+          columns: [
+            { title: 'Name', data: 2 },
+            { title: 'Email Address', data: 3},
+            { title: '', data: 0, render: (data, type, row) => {
+              return `<a href="/questionnaires/submission/${data}">View Their Questionnaire Submission</a>`;
+            }},
+             { title: '', data: 0, render: (data, type, row) => {
+              return `<a href="/matches/create/${props.mentorId}/${data}">Accept Match</a>`;
+            }}
+          ],
+        });
+      });
+    }
+
+    return m$1`
+    <div class="container px-0">
+      <table id="proposed-matches-table" class="table table-striped table-bordered" style="width:100%"></table>
+    </div>
+  `;
+  };
+
+  const MentorMatchesTable = (props) => {
+    p(() => {
+      createTable();
+    }, []);
+
+    async function createTable() {
+      const res = await fetch(
+        props.apiUrl,
+        {
+          method: 'GET',
+        }
+      );
+      const json = await res.json();
+      json.data;
+      console.log(json);
+      $(document).ready(function () {
+        $('#mentor-matches-table').DataTable({
+          data: json,
+          columns: [
+            { title: 'First Name', data: 2 },
+            { title: 'Last Name', data: 3 },
+            { title: '', data: 0, render: (data, type, row) => {
+              return `<a href="/matches/proposed/${data}">View Proposed Matches</a>`;
+            }},
+             { title: '', data: 0, render: (data, type, row) => {
+              return `<a href="/matches/accepted/${data}">View Accepted Matches</a>`;
+            }}
+          ],
+        });
+      });
+    }
+
+    return m$1`
+    <div class="container px-0">
+      <table id="mentor-matches-table" class="table table-striped table-bordered" style="width:100%"></table>
+    </div>
+  `;
+  };
+
   const profileCategorySelector = document.getElementById('profile-category-selector');
   const adminsTable  = document.getElementById('admins-table-element');
   const mentorsTable = document.getElementById('mentors-table-element');
   const submissionsTable = document.getElementById('submissions-table-element');
+  const proposedMatchesTable = document.getElementById('proposed-matches-table-element');
+  const mentorMatchesTable = document.getElementById('mentor-matches-table-element');
   console.log(profileCategorySelector);
   if (profileCategorySelector) {
    B$1(m$1`
@@ -262,6 +341,18 @@
    B$1(m$1`
    <${QuestionnaireSubmissionsTable} apiUrl=${submissionsTable.dataset.apiUrl} />
  `, submissionsTable);
+  }
+
+  if (proposedMatchesTable) {
+   B$1(m$1`
+   <${ProposedMatchesTable} apiUrl=${proposedMatchesTable.dataset.apiUrl} mentorId=${proposedMatchesTable.dataset.mentorId}/>
+ `, proposedMatchesTable);
+  }
+  console.log(mentorMatchesTable);
+  if (mentorMatchesTable) {
+   B$1(m$1`
+   <${MentorMatchesTable} apiUrl=${mentorMatchesTable.dataset.apiUrl} />
+ `, mentorMatchesTable);
   }
 
 })();
