@@ -7,9 +7,13 @@
         <div class="card shadow">
           <div class="card-body">
             <h2 class="text-center">Mentee Questionnaire</h2>
-            {% if error %}
-            <div class="alert alert-danger">{{ error }}</div>
-            {% endif %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
             <form action="/submit-questionnaire" method="post">
               {% for question in open_text_questions %}
                 <div class="mb-3">

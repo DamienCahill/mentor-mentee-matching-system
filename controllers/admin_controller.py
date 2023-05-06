@@ -1,5 +1,5 @@
 from __main__ import app
-from flask import Flask, request, render_template, session, redirect, url_for
+from flask import Flask, request, render_template, session, redirect, url_for, flash
 import models.admin_model as admin_model
 from helpers.password_helper import generate_random_password, hash_password_string
 from auth.auth import login_required
@@ -21,6 +21,7 @@ def create_admin():
         email = request.form['email']
         admin_model.insert_admin(email,first_name, last_name, hashed_password)
         message = f"Admin {first_name} {last_name} has been created."
+        flash(message, 'success')
         return redirect(url_for('view_admins'))
 
 @app.route("/admins/update/<admin_id>", methods=["GET", "POST"])
@@ -37,7 +38,7 @@ def edit_admin(admin_id):
         email = request.form['email']
         admin_model.update_admin(admin_id, email, first_name, last_name)
         message = f"Admin {first_name} {last_name} has been updated."
-        session['successMessage'] = message
+        flash(message, 'success')
         return redirect(url_for('view_admins'))
 
 @app.route("/admins")
@@ -60,4 +61,5 @@ def delete_admin(admin_id):
     admin = admin_model.get_admin(admin_id)
     admin_model.delete_admin(admin_id)
     message = f"Admin {admin[2]} {admin[3]} has been deleted."
+    flash(message, 'success')
     return redirect(url_for('view_admins'))

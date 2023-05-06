@@ -6,9 +6,13 @@
         <div class="card shadow">
           <div class="card-body">
             <h2>Edit Admin Details</h2>
-            {% if error %}
-            <div class="alert alert-danger">{{ error }}</div>
-            {% endif %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
             <form action="/admins/update/{{admin.0}}" method="post">
                 <input type="hidden" id="mentor_id" name="mentor_id" value={{admin.0}}></input>
                 <div class="form-group">

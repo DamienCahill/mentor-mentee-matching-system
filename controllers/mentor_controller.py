@@ -1,5 +1,5 @@
 from __main__ import app
-from flask import Flask, request, render_template, session, redirect, url_for
+from flask import Flask, request, render_template, session, redirect, url_for, flash
 import models.mentor_model as mentor_model
 import models.mentoring_categories_model as mentoring_categories_model
 from helpers.password_helper import generate_random_password, hash_password_string
@@ -22,6 +22,7 @@ def create_mentor():
         email = request.form['email']
         mentor_model.insert_mentor(email,first_name, last_name, hashed_password)
         message = f"Mentor {first_name} {last_name} has been created."
+        flash(message, 'success')
         return redirect(url_for('view_mentors'))
 
 @app.route("/mentors/update/<mentor_id>", methods=["GET", "POST"])
@@ -64,13 +65,23 @@ def edit_mentor(mentor_id):
         last_name = request.form['last_name']
         email = request.form['email']
         mentor_model.update_mentor(mentor_id, email, first_name, last_name)
+        message = f"Mentor {first_name} {last_name} has been updated."
+        if session.get('userid') == int(mentor_id):
+            message = f"Your profile has been updated."
+            flash(message, 'success')
+            return redirect('/mentors/update/' + mentor_id)
+        flash(message, 'success')
         return redirect(url_for('view_mentors'))
 
 @app.route("/mentors/delete/<mentor_id>")
 @login_required
 @admin_role_required
 def delete_mentor(mentor_id):
+    mentor = mentor_model.get_mentor(mentor_id)
+    message = f"Admin {mentor[2]} {mentor[3]} has been deleted."
     mentor_model.delete_mentor(mentor_id)
+
+    flash(message, 'success')
     return redirect(url_for('view_mentors'))
 
 @app.route("/mentors")
