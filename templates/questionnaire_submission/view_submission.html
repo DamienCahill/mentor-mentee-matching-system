@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block body %}
+  <div class="container-fluid bg-light">
+    <div class="row justify-content-center align-items-center" style="height: 100vh;">
+      <div class="col-sm-8 col-md-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2 class="text-center">Mentee Questionnaire Submission</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            <form action="/submit-questionnaire" method="post">
+              {% for question in open_text_questions %}
+                <div class="mb-3">
+                  <label for="email" class="form-label">{{question.1}}</label>
+                  <input disabled class="form-control" id="{{question.0}}" value="{{question.3}}" name="open_text_answer_{{question.0}}" required>
+                </div>
+                <hr>
+              {% endfor %}
+              {% for question in likert_scale_questions %}
+                <label>{{question.1}}</label><br>
+                <div class="form-check form-check-inline">
+                  <input disabled class="form-check-input" type="radio" name="likert_scale_answer_{{question.0}}" id="radio{{question.0}}" value="1" required {% if question.3 == 1 %}checked{% endif %}>
+                  <label class="form-check-label" for="radio{{question.0}}">Strongly Disagree</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input disabled class="form-check-input" type="radio" name="likert_scale_answer_{{question.0}}" id="radio{{question.0}}" value="2" {% if question.3 == 2 %}checked{% endif %}>
+                  <label class="form-check-labesl" for="radio{{question.0}}">Disgree</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input disabled class="form-check-input" type="radio" name="likert_scale_answer_{{question.0}}" id="radio{{question.0}}" value="3" {% if question.3 == 3 %}checked{% endif %}>
+                  <label class="form-check-label" for="radio{{question.0}}">Neutral</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input disabled class="form-check-input" type="radio" name="likert_scale_answer_{{question.0}}" id="radio{{question.0}}" value="4" {% if question.3 == 4 %}checked{% endif %}>
+                  <label class="form-check-label" for="radio{{question.0}}">Agree</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input disabled class="form-check-input" type="radio" name="likert_scale_answer_{{question.0}}" id="radio{{question.0}}" value="5" {% if question.3 == 5 %}checked{% endif %}>
+                  <label class="form-check-label" for="radio{{question.0}}">Strongly Agree</label>
+                </div>
+                <br><hr>
+              {% endfor %}
+              <a style="margin-bottom:5px" href="{{url_for('load_dashboard', _external=True)}}questionnaires/submissions" class="btn btn-primary">Back to Submissions</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
