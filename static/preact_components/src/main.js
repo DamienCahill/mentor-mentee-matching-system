@@ -7,6 +7,7 @@ import { MentorsTable } from './mentors-table';
 import { QuestionnaireSubmissionsTable } from './questionnaire-submissions-table';
 import { ProposedMatchesTable } from './proposed-matches-table.js';
 import { MentorMatchesTable } from './mentor-matches-table.js';
+import { AcceptedMatchesTable } from './accepted-matches-table.js';
 
 const profileCategorySelector = document.getElementById('profile-category-selector');
 const adminsTable  = document.getElementById('admins-table-element');
@@ -14,6 +15,7 @@ const mentorsTable = document.getElementById('mentors-table-element');
 const submissionsTable = document.getElementById('submissions-table-element');
 const proposedMatchesTable = document.getElementById('proposed-matches-table-element');
 const mentorMatchesTable = document.getElementById('mentor-matches-table-element');
+const acceptedMatchesTable = document.getElementById('accepted-matches-table-element');
 console.log(profileCategorySelector);
 if (profileCategorySelector) {
  render(html`
@@ -51,4 +53,10 @@ if (mentorMatchesTable) {
  render(html`
    <${MentorMatchesTable} apiUrl=${mentorMatchesTable.dataset.apiUrl} />
  `, mentorMatchesTable);
+}
+console.log(acceptedMatchesTable);
+if (acceptedMatchesTable) {
+ render(html`
+   <${AcceptedMatchesTable} apiUrl=${acceptedMatchesTable.dataset.apiUrl} />
+ `, acceptedMatchesTable);
 }

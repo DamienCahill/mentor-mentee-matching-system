@@ -26,7 +26,7 @@ const MentorMatchesTable = (props) => {
             return `<a href="/matches/proposed/${data}">View Proposed Matches</a>`;
           }},
            { title: '', data: 0, render: (data, type, row) => {
-            return `<a href="/matches/accepted/${data}">View Accepted Matches</a>`;
+            return `<a href="/matches/${data}">View Accepted Matches</a>`;
           }}
         ],
       });

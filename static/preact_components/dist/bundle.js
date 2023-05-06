@@ -296,7 +296,7 @@
               return `<a href="/matches/proposed/${data}">View Proposed Matches</a>`;
             }},
              { title: '', data: 0, render: (data, type, row) => {
-              return `<a href="/matches/accepted/${data}">View Accepted Matches</a>`;
+              return `<a href="/matches/${data}">View Accepted Matches</a>`;
             }}
           ],
         });
@@ -310,12 +310,61 @@
   `;
   };
 
+  const AcceptedMatchesTable = (props) => {
+    p(() => {
+      createTable();
+    }, []);
+    function formatDate(timestamp) {
+      const dateObject = new Date(timestamp * 1000);
+
+      // Format the date as DD/MM/YYYY
+      const day = dateObject.getDate().toString().padStart(2, '0');
+      const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+      const year = dateObject.getFullYear().toString();
+      const formattedDate = `${day}/${month}/${year}`;
+      return formattedDate;
+    }
+    async function createTable() {
+      const res = await fetch(
+        props.apiUrl,
+        {
+          method: 'GET',
+        }
+      );
+      const json = await res.json();
+      json.data;
+      console.log(json);
+      $(document).ready(function () {
+        $('#accepted-matches-table').DataTable({
+          data: json,
+          columns: [
+            { title: 'Name', data: 1 },
+            { title: 'Email Address', data: 3},
+            { title: 'Date Accepted', data: 2, render: (data, type, row) => {
+              return formatDate(data);
+            }},
+            { title: '', data: 0, render: (data, type, row) => {
+              return `<a href="/questionnaires/submission/${data}">View Questionnaire Submission</a>`;
+            }}
+          ],
+        });
+      });
+    }
+
+    return m$1`
+    <div class="container px-0">
+      <table id="accepted-matches-table" class="table table-striped table-bordered" style="width:100%"></table>
+    </div>
+  `;
+  };
+
   const profileCategorySelector = document.getElementById('profile-category-selector');
   const adminsTable  = document.getElementById('admins-table-element');
   const mentorsTable = document.getElementById('mentors-table-element');
   const submissionsTable = document.getElementById('submissions-table-element');
   const proposedMatchesTable = document.getElementById('proposed-matches-table-element');
   const mentorMatchesTable = document.getElementById('mentor-matches-table-element');
+  const acceptedMatchesTable = document.getElementById('accepted-matches-table-element');
   console.log(profileCategorySelector);
   if (profileCategorySelector) {
    B$1(m$1`
@@ -353,6 +402,12 @@
    B$1(m$1`
    <${MentorMatchesTable} apiUrl=${mentorMatchesTable.dataset.apiUrl} />
  `, mentorMatchesTable);
+  }
+  console.log(acceptedMatchesTable);
+  if (acceptedMatchesTable) {
+   B$1(m$1`
+   <${AcceptedMatchesTable} apiUrl=${acceptedMatchesTable.dataset.apiUrl} />
+ `, acceptedMatchesTable);
   }
 
 })();

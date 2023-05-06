@@ -26,7 +26,7 @@ def get_proposed_submission_matches(mentor_id):
     session['submission_matches'] = matching_submissions
     submissions = questionnaire_model.get_submissions_from_list_of_ids(tuple(matching_submissions))
     submissions_with_email = []
-    accepted_matches = match_model.get_matches(mentor_id)
+    accepted_matches = match_model.get_matches_submission_ids(mentor_id)
     accepted_matches_ids = []
     for match_id in accepted_matches:
         accepted_matches_ids.append(match_id[0])
@@ -44,6 +44,20 @@ def create_match(mentor_id, submission_id):
     flash('Match Successfully Accepted.', 'success')
     return redirect(url_for('load_dashboard'))
 
+@app.route("/matches/<mentor_id>")
+def view_accepted_matches(mentor_id):
+    return render_template('accepted-matches-list.html', mentor_id = mentor_id)
+@app.route("/matches/accepted/<mentor_id>")
+@login_required
+def get_accepted_matches(mentor_id):
+    if session.get('user_role_id',0) != 1 and session.get('userid') != int(mentor_id):
+        return []
+    matches = match_model.get_matches(mentor_id)
+    matches_with_email = []
+    for match in matches:
+        email = get_email_from_submission(match[0])
+        matches_with_email.append(match + tuple([email]))
+    return matches_with_email if matches_with_email else []
 def get_email_from_submission(submission_id):
     res =  questionnaire_model.get_email_from_submission(submission_id)
     if res:

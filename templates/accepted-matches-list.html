@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+  {% block body %}
+  <div class="container-fluid bg-light">
+    <div class="row justify-content-center align-items-center" style="height: 100vh;">
+      <div class="col-md-8">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2>Mentor Accepted Matches</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            <div id="accepted-matches-table-element" data-api-url="{{url_for('load_dashboard', _external=True)}}matches/accepted/{{ mentor_id }}"></div>
+            <a style="margin-bottom:5px" href="{{url_for('load_dashboard', _external=True)}}" class="btn btn-primary">Back to Dashboard</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../static/preact_components/dist/bundle.js"></script>
+  {% endblock %}
