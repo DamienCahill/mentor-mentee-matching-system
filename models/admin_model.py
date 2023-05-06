@@ -1,11 +1,5 @@
 from DBcm import UseDatabase
-
-config = {
-    'host':'db',
-    'database':'mentor_mentee_matching_system',
-    'user':'root',
-    'password':'devpass'
-}
+from config import config
     
 def insert_admin(email, first_name, last_name, password):
     with UseDatabase(config) as cursor:

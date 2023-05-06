@@ -1,10 +1,5 @@
 from DBcm import UseDatabase
-config = {
-    'host':'db',
-    'database':'mentor_mentee_matching_system',
-    'user':'root',
-    'password':'devpass'
-}
+from config import config
 
 def get_all_mentoring_categories():
     with UseDatabase(config) as cursor:

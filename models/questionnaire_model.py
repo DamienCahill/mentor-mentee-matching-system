@@ -1,10 +1,5 @@
 from DBcm import UseDatabase
-config = {
-    'host':'db',
-    'database':'mentor_mentee_matching_system',
-    'user':'root',
-    'password':'devpass'
-}
+from config import config
 
 def get_open_text_questions():
     with UseDatabase(config) as cursor:

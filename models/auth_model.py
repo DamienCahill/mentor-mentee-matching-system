@@ -1,11 +1,5 @@
 import DBcm
-
-config = {
-    'host':'db',
-    'database':'mentor_mentee_matching_system',
-    'user':'root',
-    'password':'devpass'
-}
+from config import config
 
 def fetch_user_from_credentials(email, password):
     with DBcm.UseDatabase(config) as cursor:
