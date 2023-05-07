@@ -38,13 +38,18 @@ def get_proposed_submission_matches(mentor_id):
     return submissions_with_email if submissions_with_email else []
 
 @app.route("/matches/create/<mentor_id>/<submission_id>")
+@login_required
 def create_match(mentor_id, submission_id):
+    if session.get('user_role_id',0) != 1 and session.get('userid') != int(mentor_id):
+        flash('Insufficent permission to create match. You have been redirected.', 'danger')
+        return redirect(url_for('load_dashboard'))
     timestamp = int(time.time())
     match_model.create_match(mentor_id, submission_id, timestamp)
     flash('Match Successfully Accepted.', 'success')
     return redirect(url_for('load_dashboard'))
 
 @app.route("/matches/<mentor_id>")
+@login_required
 def view_accepted_matches(mentor_id):
     return render_template('accepted-matches-list.html', mentor_id = mentor_id)
 @app.route("/matches/accepted/<mentor_id>")
@@ -58,12 +63,14 @@ def get_accepted_matches(mentor_id):
         email = get_email_from_submission(match[0])
         matches_with_email.append(match + tuple([email]))
     return matches_with_email if matches_with_email else []
+
 def get_email_from_submission(submission_id):
     res =  questionnaire_model.get_email_from_submission(submission_id)
     if res:
         return res[0][1]
     else:
         return ""
+
 def get_matching_submissions(mentor_categories):
     submission_weak_categories = get_submissions_weak_mentoring_categories()
     matches = []
