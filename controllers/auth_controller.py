@@ -5,8 +5,15 @@ import hashlib
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    # Login Request
-    if request.method == "POST":
+    """
+        Login attempt.
+        GET method displays login form.
+        POST method attempts to login using credentials submitted in form.
+        Returns:
+            template with login form.
+            redirect to dashboard.
+    """
+    if request.method == "POST": # Login form submissions
         email = request.form["email"]
         password = hashlib.md5(request.form["password"].encode()).hexdigest()
         user_id = fetch_user_from_credentials(email, password)
@@ -21,10 +28,9 @@ def login():
             return redirect("/")
         else:
             # Invalid email or password, show error message
-            error = "Invalid email or password"
-            return render_template("login.html", error=error)
-    # View Login page request
-    else:
+            flash("Invalid email or password", "danger")
+            return render_template("login.html")
+    else: # View Login page request
         if "userid" in session:
             # User is already logged in, redirect to homepage
             return redirect("/")
@@ -35,9 +41,9 @@ def login():
 @app.route("/logout")
 def logout():
     """
-        Log user out.
-        Remove userid from the session.
-        Redirect to login form
+        Log user out/Removes userid from the session.
+        Returns:
+            Redirect to login form
     """
     session.pop('userid', None)
     return redirect("/login")
