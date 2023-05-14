@@ -1,11 +1,14 @@
-name: CI / CD Pipeline 
+name: Tests
 
 on: [push]
-  
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps: 
-      - uses: actions/checkout@v3
-      - name: Install Requirements
-      - run: pip install -r requirements.txt
+  build-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+    - uses: actions/checkout@v3
+    - run: pip install pylint
+    - run: pylint $(git ls-files '*.py')
