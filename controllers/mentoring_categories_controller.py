@@ -1,16 +1,17 @@
-from __main__ import app
+from flask import Flask, request, render_template, session, redirect, Blueprint
 from models.mentoring_categories_model import (
     get_all_mentoring_categories, 
     get_mentor_mentoring_categories,
     delete_mentor_mentoring_category,
     add_mentor_mentoring_category
 )
+mentoring_categories_controller_bp = Blueprint('mentoring_categories_controller_bp',__name__)
 
-@app.route("/mentoring-categories", methods=["GET"]) 
+@mentoring_categories_controller_bp.route("/mentoring-categories", methods=["GET"]) 
 def all_mentoring_categories():
     return get_all_mentoring_categories()
 
-@app.route('/mentoring-categories/<mentor_id>', methods=["GET"])
+@mentoring_categories_controller_bp.route('/mentoring-categories/<mentor_id>', methods=["GET"])
 def mentor_mentoring_categories(mentor_id):
     return get_mentor_mentoring_categories(mentor_id)
 

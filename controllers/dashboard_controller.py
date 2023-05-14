@@ -1,8 +1,9 @@
-from __main__ import app
-from flask import Flask, request, render_template, session, redirect, url_for
+#from __main__ import app
+from flask import Flask, request, render_template, session, redirect, url_for, Blueprint
 from auth.auth import login_required
 
-@app.route("/")
+dashboard_controller_bp = Blueprint('dashboard_controller_bp',__name__)
+@dashboard_controller_bp.route("/")
 @login_required
 def load_dashboard():
     """
@@ -16,10 +17,10 @@ def load_dashboard():
     if session['user_role_id'] == 1:
         return render_template("dashboard/admin_dashboard.html", session=session)
 
-    return redirect(url_for('login'))
+    return redirect(url_for('auth_controller_bp.login'))
 
 @login_required
-@app.route("/profile")
+@dashboard_controller_bp.route("/profile")
 def view_profile():
     """
         Displays profile. Displays appropriate profile based on role
@@ -32,4 +33,4 @@ def view_profile():
     if session['user_role_id'] == 1:
         return redirect('/admins/update/' + str(session['userid']))
 
-    return redirect(url_for('login'))
+    return redirect(url_for('auth_controller_bp.login'))

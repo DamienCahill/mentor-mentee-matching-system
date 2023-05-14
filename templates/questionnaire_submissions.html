@@ -13,11 +13,11 @@
                 {% endfor %}
               {% endif %}
             {% endwith %}
-            <div id="submissions-table-element" data-api-url="{{url_for('load_dashboard', _external=True)}}questionnaires/get-all-submissions"></div>
+            <div id="submissions-table-element" data-api-url="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}questionnaires/get-all-submissions"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script src="{{url_for('load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
+  <script src="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
   {% endblock %}

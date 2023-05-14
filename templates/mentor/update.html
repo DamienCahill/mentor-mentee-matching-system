@@ -30,18 +30,18 @@
                 <h2>Edit Mentor Mentoring Categories</h2>
                 <div 
                   id="profile-category-selector" 
-                  data-api-url="{{url_for('load_dashboard', _external=True)}}/mentoring-categories" 
+                  data-api-url="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}/mentoring-categories" 
                   data-mentor-id="{{mentor.0}}"
                   data-selected-category-ids="{{mentor_categories}}"
                   >   
                 </div><br>
                 <button type="submit" class="btn btn-primary">Update Profile</button><br>
-                <a style="margin-bottom:5px;margin-top:5px" href="{{url_for('load_dashboard', _external=True)}}/mentors" class="btn btn-primary">Back to Mentor List</a>
+                <a style="margin-bottom:5px;margin-top:5px" href="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}/mentors" class="btn btn-primary">Back to Mentor List</a>
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script src="{{url_for('load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
+  <script src="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
   {% endblock %}

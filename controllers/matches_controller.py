@@ -1,5 +1,4 @@
-from __main__ import app
-from flask import Flask, request, render_template, session, flash, redirect, url_for
+from flask import Flask, request, render_template, session, flash, redirect, url_for, Blueprint
 from auth.auth import login_required
 import models.mentor_model as mentor_model
 import models.mentoring_categories_model as mentoring_categories_model
@@ -7,14 +6,16 @@ import models.questionnaire_model as questionnaire_model
 import models.match_model as match_model
 import time
 
-@app.route("/matches/proposed/<mentor_id>")
+matches_controller_bp = Blueprint('matches_controller_bp',__name__)
+
+@matches_controller_bp.route("/matches/proposed/<mentor_id>")
 @login_required
 def get_proposed_matches(mentor_id):
     if session.get('user_role_id',0) != 1 and session.get('userid') != int(mentor_id):
-        return redirect(url_for('load_dashboard'))
+        return redirect(url_for('dashboard_controller_bp.load_dashboard'))
     return render_template('proposed_matches.html',mentor_id=mentor_id)
 
-@app.route("/matches/proposed-submissions/<mentor_id>")
+@matches_controller_bp.route("/matches/proposed-submissions/<mentor_id>")
 @login_required
 def get_proposed_submission_matches(mentor_id):
     if session.get('user_role_id',0) != 1 and session.get('userid') != int(mentor_id):
@@ -37,22 +38,22 @@ def get_proposed_submission_matches(mentor_id):
         submissions_with_email.append(submission + tuple([email]))
     return submissions_with_email if submissions_with_email else []
 
-@app.route("/matches/create/<mentor_id>/<submission_id>")
+@matches_controller_bp.route("/matches/create/<mentor_id>/<submission_id>")
 @login_required
 def create_match(mentor_id, submission_id):
     if session.get('user_role_id',0) != 1 and session.get('userid') != int(mentor_id):
         flash('Insufficent permission to create match. You have been redirected.', 'danger')
-        return redirect(url_for('load_dashboard'))
+        return redirect(url_for('dashboard_controller_bp.load_dashboard'))
     timestamp = int(time.time())
     match_model.create_match(mentor_id, submission_id, timestamp)
     flash('Match Successfully Accepted.', 'success')
-    return redirect(url_for('load_dashboard'))
+    return redirect(url_for('dashboard_controller_bp.load_dashboard'))
 
-@app.route("/matches/<mentor_id>")
+@matches_controller_bp.route("/matches/<mentor_id>")
 @login_required
 def view_accepted_matches(mentor_id):
     return render_template('accepted-matches-list.html', mentor_id = mentor_id)
-@app.route("/matches/accepted/<mentor_id>")
+@matches_controller_bp.route("/matches/accepted/<mentor_id>")
 @login_required
 def get_accepted_matches(mentor_id):
     if session.get('user_role_id',0) != 1 and session.get('userid') != int(mentor_id):

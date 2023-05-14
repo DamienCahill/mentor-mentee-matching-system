@@ -13,8 +13,8 @@
                 {% endfor %}
               {% endif %}
             {% endwith %}
-            <div id="mentor-matches-table-element" data-api-url="{{url_for('load_dashboard', _external=True)}}mentors/get-all-mentors"></div>
-            <a style="margin-bottom:5px" href="{{url_for('load_dashboard', _external=True)}}" class="btn btn-primary">Back to Dashboard</a>
+            <div id="mentor-matches-table-element" data-api-url="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}mentors/get-all-mentors"></div>
+            <a style="margin-bottom:5px" href="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}" class="btn btn-primary">Back to Dashboard</a>
           </div>
         </div>
       </div>

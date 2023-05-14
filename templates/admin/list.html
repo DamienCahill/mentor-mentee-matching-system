@@ -13,13 +13,13 @@
                 {% endfor %}
               {% endif %}
             {% endwith %}
-            <a style="margin-bottom:5px" href="{{url_for('load_dashboard', _external=True)}}admins/create" class="btn btn-primary">Create New Admin</a>
-            <div id="admins-table-element" data-api-url="{{url_for('load_dashboard', _external=True)}}admins/get-all-admins"></div>
-            <a style="margin-bottom:5px" href="{{url_for('load_dashboard', _external=True)}}" class="btn btn-primary">Back to Dashboard</a>
+            <a style="margin-bottom:5px" href="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}admins/create" class="btn btn-primary">Create New Admin</a>
+            <div id="admins-table-element" data-api-url="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}admins/get-all-admins"></div>
+            <a style="margin-bottom:5px" href="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}" class="btn btn-primary">Back to Dashboard</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script src="{{url_for('load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
+  <script src="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
   {% endblock %}

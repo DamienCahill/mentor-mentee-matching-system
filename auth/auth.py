@@ -5,6 +5,6 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not session.get("userid",0):
-            return redirect(url_for('login'))
+            return redirect(url_for('auth_controller_bp.login'))
         return f(*args, **kwargs)
     return decorated_function

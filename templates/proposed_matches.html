@@ -13,12 +13,12 @@
                 {% endfor %}
               {% endif %}
             {% endwith %}
-            <div id="proposed-matches-table-element" data-api-url="{{url_for('load_dashboard', _external=True)}}matches/proposed-submissions/{{mentor_id}}" data-mentor-id="{{mentor_id}}"></div>
-            <a style="margin-bottom:5px" href="{{url_for('load_dashboard', _external=True)}}" class="btn btn-primary">Back to Dashboard</a>
+            <div id="proposed-matches-table-element" data-api-url="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}matches/proposed-submissions/{{mentor_id}}" data-mentor-id="{{mentor_id}}"></div>
+            <a style="margin-bottom:5px" href="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}" class="btn btn-primary">Back to Dashboard</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script src="{{url_for('load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
+  <script src="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
   {% endblock %}

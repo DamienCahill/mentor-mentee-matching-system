@@ -1,12 +1,12 @@
-from __main__ import app
-from flask import Flask, request, render_template, session, redirect, url_for, flash
+from flask import Flask, request, render_template, session, redirect, url_for, flash, Blueprint
 import models.admin_model as admin_model
 from helpers.password_helper import generate_random_password, hash_password_string
 from auth.auth import login_required
 from auth.authz import admin_role_required
 
+admin_controller_bp = Blueprint('admin_controller_bp',__name__)
 
-@app.route("/admins/create", methods=["GET", "POST"])
+@admin_controller_bp.route("/admins/create", methods=["GET", "POST"])
 @login_required
 @admin_role_required
 def create_admin():
@@ -30,9 +30,9 @@ def create_admin():
         admin_model.insert_admin(email,first_name, last_name, hashed_password)
 
         flash(f"Admin {first_name} {last_name} has been created.", 'success')
-        return redirect(url_for('view_admins'))
+        return redirect(url_for('admin_controller_bp.view_admins'))
 
-@app.route("/admins/update/<admin_id>", methods=["GET", "POST"])
+@admin_controller_bp.route("/admins/update/<admin_id>", methods=["GET", "POST"])
 @login_required
 @admin_role_required
 def edit_admin(admin_id):
@@ -57,9 +57,9 @@ def edit_admin(admin_id):
         admin_model.update_admin(admin_id, email, first_name, last_name)
         message = f"Admin {first_name} {last_name} has been updated."
         flash(message, 'success')
-        return redirect(url_for('view_admins'))
+        return redirect(url_for('admin_controller_bp.view_admins'))
 
-@app.route("/admins")
+@admin_controller_bp.route("/admins")
 @login_required
 @admin_role_required
 def view_admins():
@@ -70,7 +70,7 @@ def view_admins():
     """
     return render_template("admin/list.html")
 
-@app.route("/admins/get-all-admins")
+@admin_controller_bp.route("/admins/get-all-admins")
 @login_required
 @admin_role_required
 def get_all_admins():
@@ -81,7 +81,7 @@ def get_all_admins():
     data = admin_model.view_all_admins()
     return data
 
-@app.route("/admins/delete/<admin_id>")
+@admin_controller_bp.route("/admins/delete/<admin_id>")
 @login_required
 @admin_role_required
 def delete_admin(admin_id):
@@ -96,4 +96,4 @@ def delete_admin(admin_id):
     admin_model.delete_admin(admin_id)
 
     flash(f"Admin {admin[2]} {admin[3]} has been deleted.", 'success')
-    return redirect(url_for('view_admins'))
+    return redirect(url_for('admin_controller_bp.view_admins'))

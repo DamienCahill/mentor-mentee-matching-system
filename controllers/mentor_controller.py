@@ -1,5 +1,4 @@
-from __main__ import app
-from flask import Flask, request, render_template, session, redirect, url_for, flash
+from flask import Flask, request, render_template, session, redirect, url_for, flash, Blueprint
 import models.mentor_model as mentor_model
 import models.mentoring_categories_model as mentoring_categories_model
 from helpers.password_helper import generate_random_password, hash_password_string
@@ -7,7 +6,9 @@ import sys
 from auth.auth import login_required
 from auth.authz import admin_role_required
 
-@app.route("/mentors/create", methods=["GET", "POST"])
+mentor_controller_bp = Blueprint('mentor_controller_bp',__name__)
+
+@mentor_controller_bp.route("/mentors/create", methods=["GET", "POST"])
 @login_required
 @admin_role_required
 def create_mentor():
@@ -31,9 +32,9 @@ def create_mentor():
         mentor_model.insert_mentor(email,first_name, last_name, hashed_password)
         message = f"Mentor {first_name} {last_name} has been created."
         flash(message, 'success')
-        return redirect(url_for('view_mentors'))
+        return redirect(url_for('mentor_controller_bp.view_mentors'))
 
-@app.route("/mentors/update/<mentor_id>", methods=["GET", "POST"])
+@mentor_controller_bp.route("/mentors/update/<mentor_id>", methods=["GET", "POST"])
 @login_required
 def edit_mentor(mentor_id):
     """
@@ -49,7 +50,7 @@ def edit_mentor(mentor_id):
 
     # Only allow editing if user is an admin or if it is their own profile.
     if session.get('user_role_id',0) != 1 and session.get('userid') != int(mentor_id):
-        return redirect(url_for('load_dashboard'))
+        return redirect(url_for('dashboard_controller_bp.load_dashboard'))
 
     if request.method == "GET": # Display the edit form.
         mentor = mentor_model.get_mentor(mentor_id)
@@ -94,9 +95,9 @@ def edit_mentor(mentor_id):
             return redirect('/mentors/update/' + mentor_id)
 
         flash(f"Mentor {first_name} {last_name} has been updated.", 'success')
-        return redirect(url_for('view_mentors'))
+        return redirect(url_for('mentor_controller_bp.view_mentors'))
 
-@app.route("/mentors/delete/<mentor_id>")
+@mentor_controller_bp.route("/mentors/delete/<mentor_id>")
 @login_required
 @admin_role_required
 def delete_mentor(mentor_id):
@@ -113,9 +114,9 @@ def delete_mentor(mentor_id):
 
     # Create flash message and redirect.
     flash(f"Admin {mentor[2]} {mentor[3]} has been deleted.", 'success')
-    return redirect(url_for('view_mentors'))
+    return redirect(url_for('mentor_controller_bp.view_mentors'))
 
-@app.route("/mentors")
+@mentor_controller_bp.route("/mentors")
 @login_required
 @admin_role_required
 def view_mentors():
@@ -126,7 +127,7 @@ def view_mentors():
     """
     return render_template("mentor/list.html")
 
-@app.route("/mentors/get-all-mentors")
+@mentor_controller_bp.route("/mentors/get-all-mentors")
 @login_required
 @admin_role_required
 def get_all_mentors():
@@ -137,7 +138,7 @@ def get_all_mentors():
     data = mentor_model.view_all_mentors()
     return data
 
-@app.route("/mentors/matches")
+@mentor_controller_bp.route("/mentors/matches")
 @login_required
 @admin_role_required
 def view_mentor_matches():

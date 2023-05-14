@@ -1,9 +1,10 @@
-from __main__ import app
-from flask import Flask, request, render_template, session, redirect
+from flask import Flask, request, render_template, session, redirect, Blueprint, flash
 from models.auth_model import fetch_user_from_credentials, fetch_user_details_as_dictionary_from_id
 import hashlib
 
-@app.route("/login", methods=["GET", "POST"])
+auth_controller_bp = Blueprint('auth_controller_bp',__name__)
+
+@auth_controller_bp.route("/login", methods=["GET", "POST"])
 def login():
     """
         Login attempt.
@@ -38,7 +39,7 @@ def login():
             # User is not logged in, show login form
             return render_template("login.html")
 
-@app.route("/logout")
+@auth_controller_bp.route("/logout")
 def logout():
     """
         Log user out/Removes userid from the session.
