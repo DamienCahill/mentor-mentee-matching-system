@@ -9,6 +9,7 @@ from controllers.matches_controller import matches_controller_bp
 from controllers.admin_controller import admin_controller_bp
 
 app = Flask(__name__)
+app.debug = True
 with app.app_context():
     app.register_blueprint(dashboard_controller_bp)
     app.register_blueprint(questionnaire_controller_bp)
