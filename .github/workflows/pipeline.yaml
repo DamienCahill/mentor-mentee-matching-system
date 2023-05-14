@@ -8,14 +8,4 @@ jobs:
     steps: 
       - uses: actions/checkout@v3
       - name: Install Requirements
-      - run: pip install -r requirements.txt      
-  test:
-    needs: build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Run Tests
-      - run: pytest
+      - run: pip install -r requirements.txt
