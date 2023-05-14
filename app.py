@@ -21,4 +21,4 @@ with app.app_context():
 app.secret_key = "lkjlhjjkhkhilhuih78hyioy89yt9o8t87tr"
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False)  # pragma; no coverage
+    app.run(host='0.0.0.0', debug=True)  # pragma; no coverage
