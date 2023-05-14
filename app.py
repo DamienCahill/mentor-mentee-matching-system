@@ -7,7 +7,7 @@ from controllers.mentor_controller import mentor_controller_bp
 from controllers.mentoring_categories_controller import  mentoring_categories_controller_bp
 from controllers.matches_controller import matches_controller_bp
 from controllers.admin_controller import admin_controller_bp
-
+from tests.fixtures import fixtures_bp
 app = Flask(__name__)
 app.debug = True
 with app.app_context():
@@ -18,6 +18,7 @@ with app.app_context():
     app.register_blueprint(mentoring_categories_controller_bp)
     app.register_blueprint(matches_controller_bp)
     app.register_blueprint(admin_controller_bp)
+    app.register_blueprint(fixtures_bp)
 # This is required to use sessions.
 app.secret_key = "lkjlhjjkhkhilhuih78hyioy89yt9o8t87tr"
 

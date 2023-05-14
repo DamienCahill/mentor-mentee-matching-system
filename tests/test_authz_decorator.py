@@ -4,11 +4,6 @@ from auth.authz import admin_role_required
 
 def test_admin_role_required_decorator():
 
-    @app.route("/test_admin_role_required")
-    @admin_role_required
-    def admin_req():
-        return "You are an admin!"
-
     with app.test_client() as client:
         # Make a request to the protected route without being an admin
         with client.session_transaction() as sess:
