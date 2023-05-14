@@ -9,13 +9,14 @@ from controllers.matches_controller import matches_controller_bp
 from controllers.admin_controller import admin_controller_bp
 
 app = Flask(__name__)
-app.register_blueprint(dashboard_controller_bp)
-app.register_blueprint(questionnaire_controller_bp)
-app.register_blueprint(auth_controller_bp)
-app.register_blueprint(mentor_controller_bp)
-app.register_blueprint(mentoring_categories_controller_bp)
-app.register_blueprint(matches_controller_bp)
-app.register_blueprint(admin_controller_bp)
+with app.app_context():
+    app.register_blueprint(dashboard_controller_bp)
+    app.register_blueprint(questionnaire_controller_bp)
+    app.register_blueprint(auth_controller_bp)
+    app.register_blueprint(mentor_controller_bp)
+    app.register_blueprint(mentoring_categories_controller_bp)
+    app.register_blueprint(matches_controller_bp)
+    app.register_blueprint(admin_controller_bp)
 # This is required to use sessions.
 app.secret_key = "lkjlhjjkhkhilhuih78hyioy89yt9o8t87tr"
 
