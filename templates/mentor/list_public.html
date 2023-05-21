@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+  {% block body %}
+  <div class="container-fluid bg-light">
+    <div class="row justify-content-center align-items-center" style="height: 100vh;">
+      <div class="col-md-8">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2>Mentors</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            <div id="mentors-table-public-element" data-api-url="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}mentors/get-all-mentors-public"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../static/preact_components/dist/bundle.js"></script>
+  {% endblock %}

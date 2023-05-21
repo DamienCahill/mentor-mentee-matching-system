@@ -8,22 +8,34 @@ import { QuestionnaireSubmissionsTable } from './questionnaire-submissions-table
 import { ProposedMatchesTable } from './proposed-matches-table.js';
 import { MentorMatchesTable } from './mentor-matches-table.js';
 import { AcceptedMatchesTable } from './accepted-matches-table.js';
+import { MentorsTablePublic } from './mentor-table-public';
+import { PublicProfileCategory } from './public-profile-category';
 
 const profileCategorySelector = document.getElementById('profile-category-selector');
+const publicProfileCategory = document.getElementById('public-profile-category');
 const adminsTable  = document.getElementById('admins-table-element');
 const mentorsTable = document.getElementById('mentors-table-element');
 const submissionsTable = document.getElementById('submissions-table-element');
 const proposedMatchesTable = document.getElementById('proposed-matches-table-element');
 const mentorMatchesTable = document.getElementById('mentor-matches-table-element');
 const acceptedMatchesTable = document.getElementById('accepted-matches-table-element');
-console.log(profileCategorySelector);
+const mentorsTablePublic = document.getElementById('mentors-table-public-element');
+
 if (profileCategorySelector) {
  render(html`
    <${ProfileCategorySelector} apiUrl=${profileCategorySelector.dataset.apiUrl} mentorId=${profileCategorySelector.dataset.mentorId}
    selectedCategoryIds=${profileCategorySelector.dataset.selectedCategoryIds} />
  `, profileCategorySelector);
 }
-console.log(adminsTable)
+
+console.log(publicProfileCategory);
+if (publicProfileCategory) {
+ render(html`
+   <${PublicProfileCategory} apiUrl=${publicProfileCategory.dataset.apiUrl} mentorId=${publicProfileCategory.dataset.mentorId}
+   selectedCategoryIds=${publicProfileCategory.dataset.selectedCategoryIds} />
+ `, publicProfileCategory);
+}
+
 if (adminsTable) {
  render(html`
    <${AdminsTable} apiUrl=${adminsTable.dataset.apiUrl} />
@@ -36,7 +48,7 @@ if (mentorsTable) {
  `, mentorsTable);
 }
 
-console.log(submissionsTable)
+
 if (submissionsTable) {
  render(html`
    <${QuestionnaireSubmissionsTable} apiUrl=${submissionsTable.dataset.apiUrl} />
@@ -48,15 +60,21 @@ if (proposedMatchesTable) {
    <${ProposedMatchesTable} apiUrl=${proposedMatchesTable.dataset.apiUrl} mentorId=${proposedMatchesTable.dataset.mentorId}/>
  `, proposedMatchesTable);
 }
-console.log(mentorMatchesTable);
+
 if (mentorMatchesTable) {
  render(html`
    <${MentorMatchesTable} apiUrl=${mentorMatchesTable.dataset.apiUrl} />
  `, mentorMatchesTable);
 }
-console.log(acceptedMatchesTable);
+
 if (acceptedMatchesTable) {
  render(html`
    <${AcceptedMatchesTable} apiUrl=${acceptedMatchesTable.dataset.apiUrl} />
  `, acceptedMatchesTable);
+}
+console.log(mentorsTablePublic)
+if (mentorsTablePublic) {
+ render(html`
+   <${MentorsTablePublic} apiUrl=${mentorsTablePublic.dataset.apiUrl} />
+ `, mentorsTablePublic);
 }

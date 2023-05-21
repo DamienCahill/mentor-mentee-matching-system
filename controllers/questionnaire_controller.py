@@ -34,7 +34,7 @@ def submit_questionnaire():
         question_id = split_string[-1]
         answer = value
         insert_answer(submission_id, question_id, answer, answer_type)
-    return render_template("test.html")
+    return render_template("thank_you.html")
 
 @questionnaire_controller_bp.route("/questionnaires/submissions", methods=["GET"])
 @login_required

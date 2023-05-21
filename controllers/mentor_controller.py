@@ -59,7 +59,7 @@ def edit_mentor(mentor_id):
         for category in mentor_categories:
             mentor_category_ids.append(category[0])
 
-        return render_template("mentor/update.html", mentor=mentor, mentor_categories=','.join(map(str, mentor_category_ids)))
+        return render_template("mentor/update.html", mentor=mentor, mentor_categories=','.join(map(str, mentor_category_ids)), session=session)
     else: # Handle the submission of the edit form
         # Get a list of category ids selected
         if (request.form['selectedCategoryIds']):
@@ -149,4 +149,36 @@ def view_mentor_matches():
     """
     return render_template('mentor/mentor-matches-list.html')
 
+@mentor_controller_bp.route("/mentors/profiles")
+def view_mentors_profile():
+    """
+        View mentors.
+        Returns:
+            template with public list of mentors view. 
+    """
+    return render_template("mentor/list_public.html")
 
+@mentor_controller_bp.route("/mentors/get-all-mentors-public")
+def get_all_mentors_public():
+    """
+        Get a list of mentors. 
+        Used by list of mentor view to populate table.
+    """
+    data = mentor_model.view_all_mentors()
+    return data
+
+@mentor_controller_bp.route("/mentors/profiles/<mentor_id>")
+def view_mentors_profile_public(mentor_id):
+    """
+        View a mentors profile publicallu.
+        Returns:
+            template with public view of mentor profile. 
+    """
+    if request.method == "GET": # Display the edit form.
+        mentor = mentor_model.get_mentor(mentor_id)
+        mentor_categories = mentoring_categories_model.get_mentor_mentoring_categories(mentor_id)
+        mentor_category_ids = []
+        for category in mentor_categories:
+            mentor_category_ids.append(category[0])
+
+        return render_template("mentor/view_public.html", mentor=mentor, mentor_categories=','.join(map(str, mentor_category_ids)))

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+  {% block body %}
+  <div class="container-fluid bg-light mt-5 mb-5">
+    <div class="row justify-content-center align-items-center" style="height: 100vh;">
+      <div class="col-sm-8 col-md-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2>View Mentor Profile</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            <form action="/mentors/update/{{mentor.0}}" method="post">
+                <input type="hidden" id="mentor_id" name="mentor_id" value={{mentor.0}}></input>
+                <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input disabled type="email" class="form-control" id="email" value={{mentor.1}} placeholder="Enter email" name="email">
+                </div><br>
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input disabled type="text" class="form-control" id="first_name" value={{mentor.2}} placeholder="Enter First Name" name="first_name">
+                </div><br>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input disabled type="text" class="form-control" id="last_name" value={{mentor.3}} placeholder="Enter Last Name" name="last_name">
+                </div><br>
+                <h2>Mentor Mentoring Categories</h2>
+                <div 
+                  id="public-profile-category" 
+                  data-api-url="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}/mentoring-categories" 
+                  data-mentor-id="{{mentor.0}}"
+                  data-selected-category-ids="{{mentor_categories}}"
+                  >   
+                </div><br>
+                <a style="margin-bottom:5px;margin-top:5px" href="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}/mentors/profiles" class="btn btn-primary">Back to Mentor List</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{{url_for('dashboard_controller_bp.load_dashboard', _external=True)}}/static/preact_components/dist/bundle.js"></script>
+  {% endblock %}

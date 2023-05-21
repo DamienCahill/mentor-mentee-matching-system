@@ -358,21 +358,107 @@
   `;
   };
 
+  const MentorsTablePublic = (props) => {
+    p(() => {
+      createTable();
+    }, []);
+
+    async function createTable() {
+      const res = await fetch(
+        props.apiUrl,
+        {
+          method: 'GET',
+        }
+      );
+      const json = await res.json();
+      json.data;
+      console.log(json);
+      $(document).ready(function () {
+        $('#mentors-table').DataTable({
+          data: json,
+          columns: [
+            { title: 'First Name', data: 2 },
+            { title: 'Last Name', data: 3 },
+            { title: 'Email', data: 1 },
+            { title: '', data: 0, render: (data, type, row) => {
+              return `<a href="/mentors/profiles/${data}">View Profile</a>`;
+            }},
+          ],
+        });
+      });
+    }
+
+    return m$1`
+    <div class="container px-0">
+      <table id="mentors-table" class="table table-striped table-bordered" style="width:100%"></table>
+    </div>
+  `;
+  };
+
+  const PublicProfileCategory = (props) => {
+    const [selectedCategories, setSelectedCategories] = h([]);
+    p(() => {
+      fetchCategories();
+    }, []);
+
+    async function fetchCategories() {
+      const mentorCategoriesRes = await fetch( `${props.apiUrl}/${props.mentorId}`, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+
+      if( mentorCategoriesRes.ok ) {
+        console.log('json');
+        const json = await mentorCategoriesRes.json();
+        setSelectedCategories(json);
+      }
+
+    }
+  return m$1`
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Selected Categories</h5>
+        ${selectedCategories.map((categories, index) => (
+          m$1`
+            <a style="margin:3px;" class="btn btn-success" href="#">
+              ${categories[1]} <i id=${categories[0]} name="${categories[1]}"></i>
+            </a>
+          `
+        ))}
+    </div>
+  </div>
+`;
+
+  };
+
   const profileCategorySelector = document.getElementById('profile-category-selector');
+  const publicProfileCategory = document.getElementById('public-profile-category');
   const adminsTable  = document.getElementById('admins-table-element');
   const mentorsTable = document.getElementById('mentors-table-element');
   const submissionsTable = document.getElementById('submissions-table-element');
   const proposedMatchesTable = document.getElementById('proposed-matches-table-element');
   const mentorMatchesTable = document.getElementById('mentor-matches-table-element');
   const acceptedMatchesTable = document.getElementById('accepted-matches-table-element');
-  console.log(profileCategorySelector);
+  const mentorsTablePublic = document.getElementById('mentors-table-public-element');
+
   if (profileCategorySelector) {
    B$1(m$1`
    <${ProfileCategorySelector} apiUrl=${profileCategorySelector.dataset.apiUrl} mentorId=${profileCategorySelector.dataset.mentorId}
    selectedCategoryIds=${profileCategorySelector.dataset.selectedCategoryIds} />
  `, profileCategorySelector);
   }
-  console.log(adminsTable);
+
+  console.log(publicProfileCategory);
+  if (publicProfileCategory) {
+   B$1(m$1`
+   <${PublicProfileCategory} apiUrl=${publicProfileCategory.dataset.apiUrl} mentorId=${publicProfileCategory.dataset.mentorId}
+   selectedCategoryIds=${publicProfileCategory.dataset.selectedCategoryIds} />
+ `, publicProfileCategory);
+  }
+
   if (adminsTable) {
    B$1(m$1`
    <${AdminsTable} apiUrl=${adminsTable.dataset.apiUrl} />
@@ -385,7 +471,7 @@
  `, mentorsTable);
   }
 
-  console.log(submissionsTable);
+
   if (submissionsTable) {
    B$1(m$1`
    <${QuestionnaireSubmissionsTable} apiUrl=${submissionsTable.dataset.apiUrl} />
@@ -397,17 +483,23 @@
    <${ProposedMatchesTable} apiUrl=${proposedMatchesTable.dataset.apiUrl} mentorId=${proposedMatchesTable.dataset.mentorId}/>
  `, proposedMatchesTable);
   }
-  console.log(mentorMatchesTable);
+
   if (mentorMatchesTable) {
    B$1(m$1`
    <${MentorMatchesTable} apiUrl=${mentorMatchesTable.dataset.apiUrl} />
  `, mentorMatchesTable);
   }
-  console.log(acceptedMatchesTable);
+
   if (acceptedMatchesTable) {
    B$1(m$1`
    <${AcceptedMatchesTable} apiUrl=${acceptedMatchesTable.dataset.apiUrl} />
  `, acceptedMatchesTable);
+  }
+  console.log(mentorsTablePublic);
+  if (mentorsTablePublic) {
+   B$1(m$1`
+   <${MentorsTablePublic} apiUrl=${mentorsTablePublic.dataset.apiUrl} />
+ `, mentorsTablePublic);
   }
 
 })();
